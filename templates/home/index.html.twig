@@ -3,9 +3,21 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<table>
-    {% for record in records %}
-        {{ record.fields.bateau }}
-    {% endfor %}
-</table>
+    <h1 class="title text-center">Futures fermetures du pont</h1>
+    <div class="container col-6">
+    <table class="data-table table table-striped table-hover">
+        <th>Raison</th>
+        <th>Heure de fermeture du pont</th>
+        <th>Heure de réouverture du pont</th>
+        {% for data in datas %}
+            <tr>
+                <td>{{ data.reason }}</td>
+                <td>{{ data.closureHour }}</td>
+                <td>{{ data.reOpenHour }}</td>
+            </tr>
+
+
+        {% endfor %}
+    </table>
+    </div>
 {% endblock %}
