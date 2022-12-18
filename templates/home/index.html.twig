@@ -3,21 +3,43 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <h1 class="title text-center">Futures fermetures du pont</h1>
-    <div class="container col-6">
-    <table class="data-table table table-striped table-hover">
-        <th>Raison</th>
-        <th>Heure de fermeture du pont</th>
-        <th>Heure de réouverture du pont</th>
-        {% for data in datas %}
-            <tr>
-                <td>{{ data.reason }}</td>
-                <td>{{ data.closureHour }}</td>
-                <td>{{ data.reOpenHour }}</td>
-            </tr>
+    <h1 class="title text-center">Futures fermetures du pont à partir du {{ dateOfToday }}</h1>
+    <div class="container col-8 text-center reason-selector">
+        <label class="toggle">
+            <span class="toggle-label">Afficher uniquement les fermetures dûes à une maintenance</span>
+            <input class="toggle-checkbox" id="toggle-listener" type="checkbox" checked>
+            <div class="toggle-switch"></div>
+            <span class="toggle-label">Afficher uniquement les fermetures dûes à un passage de bateau(x)</span>
+
+        </label>
+    </div>
+    <div class="container">
+        <table class="data-table table table-hover">
+            <th class="col-3 text-center">Raison</th>
+            <th class="col-3 text-center">Heure de fermeture du pont</th>
+            <th class="col-3 text-center">Heure de réouverture du pont</th>
+
+            {% for data in datas %}
+
+                {% if data.reason is same as("MAINTENANCE") %}
+                    <tr class="maintenanceReason hidden">
+                        <td class="text-center">{{ data.reason }}</td>
+                        <td class="text-center">{{ data.closureHour }}</td>
+                        <td class="text-center">{{ data.reOpenHour }}</td>
+                    </tr>
+
+                {% endif %}
+                {% if not data.reason is same as("MAINTENANCE") %}
+                    <tr class="boatReason shown">
+                        <td class="text-center">{{ data.reason }}</td>
+                        <td class="text-center">{{ data.closureHour }}</td>
+                        <td class="text-center">{{ data.reOpenHour }}</td>
+                    </tr>
+                {% endif %}
 
 
-        {% endfor %}
-    </table>
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}
+
