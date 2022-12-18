@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<table>
+    {% for record in records %}
+        {{ record.fields.bateau }}
+    {% endfor %}
+</table>
+{% endblock %}
