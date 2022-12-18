@@ -4,6 +4,29 @@
 
 {% block body %}
     <h1 class="title text-center">Futures fermetures du pont à partir du {{ dateOfToday }}</h1>
+    <div class="container d-flex justify-content-center p-2 col6">
+        <div class="searchDateForm form-group">
+            {{ form_start(dateForm) }}
+            {{ form_row(dateForm) }}
+            <button>Recherche</button>
+            {{ form_end(dateForm) }}
+        </div>
+        <div class="searchBoatForm form-group shown" id="searchBoatForm">
+            {{ form_start(boatForm) }}
+            <div class="flex-column">
+                {{ form_row(boatForm) }}
+            </div>
+
+            <button>Recherche</button>
+            {{ form_end(boatForm) }}
+        </div>
+    </div>
+
+    {% if not search is empty %}
+        Résultats pour votre recherche : {{ search }}
+        <a href="{{ path('app_index') }}">Remettre les filtres à zéro</a>
+    {% endif %}
+
     <div class="container col-8 text-center reason-selector">
         <label class="toggle">
             <span class="toggle-label">Afficher uniquement les fermetures dûes à une maintenance</span>
