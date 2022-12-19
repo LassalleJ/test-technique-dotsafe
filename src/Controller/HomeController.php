@@ -41,7 +41,7 @@ class HomeController extends AbstractController
 
         // Handle the form that allows to search for closures at a specific date
 
-        if ($searchDateForm->isSubmitted() && $searchBoatForm->isValid()) {
+        if ($searchDateForm->isSubmitted() && $searchDateForm->isValid()) {
 
             $shownData = [];
 
@@ -82,7 +82,6 @@ class HomeController extends AbstractController
                 }
             }
         }
-
         return $this->render('home/index.html.twig', [
             'datas' => $shownData,
             'dateForm' => $searchDateForm,

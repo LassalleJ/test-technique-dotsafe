@@ -7,14 +7,14 @@
     <div class="container d-flex justify-content-center p-2 col6">
         <div class="searchDateForm form-group">
             {{ form_start(dateForm) }}
-            {{ form_row(dateForm.Date, {'attr': {'class': 'form-control dateFormInput'}}) }}
+            {{ form_row(dateForm.Recherche_une_date, {'attr': {'class': 'form-control dateFormInput'}}) }}
             <button class="btn btn-outline-info">Recherche</button>
             {{ form_end(dateForm) }}
         </div>
         <div class="searchBoatForm form-group shown" id="searchBoatForm">
             {{ form_start(boatForm) }}
             <div class="flex-column">
-                {{ form_row(boatForm.Bateau, {'attr': {'class': 'form-control dateFormInput'}}) }}
+                {{ form_row(boatForm.Rechercher_un_bateau, {'attr': {'class': 'form-control dateFormInput'}}) }}
             </div>
 
             <button class="btn btn-outline-info">Recherche</button>

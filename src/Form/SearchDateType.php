@@ -12,7 +12,7 @@ class SearchDateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Date', DateType::class)
+            ->add('Recherche_une_date', DateType::class)
         ;
     }
 

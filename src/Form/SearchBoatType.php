@@ -14,7 +14,7 @@ class SearchBoatType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Bateau', TextType::class)
+            ->add('Rechercher_un_bateau', TextType::class)
         ;
     }
 
