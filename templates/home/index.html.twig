@@ -7,24 +7,25 @@
     <div class="container d-flex justify-content-center p-2 col6">
         <div class="searchDateForm form-group">
             {{ form_start(dateForm) }}
-            {{ form_row(dateForm) }}
-            <button>Recherche</button>
+            {{ form_row(dateForm.Date, {'attr': {'class': 'form-control dateFormInput'}}) }}
+            <button class="btn btn-outline-info">Recherche</button>
             {{ form_end(dateForm) }}
         </div>
         <div class="searchBoatForm form-group shown" id="searchBoatForm">
             {{ form_start(boatForm) }}
             <div class="flex-column">
-                {{ form_row(boatForm) }}
+                {{ form_row(boatForm.Bateau, {'attr': {'class': 'form-control dateFormInput'}}) }}
             </div>
 
-            <button>Recherche</button>
+            <button class="btn btn-outline-info">Recherche</button>
             {{ form_end(boatForm) }}
         </div>
     </div>
 
     {% if not search is empty %}
-        Résultats pour votre recherche : {{ search }}
-        <a href="{{ path('app_index') }}">Remettre les filtres à zéro</a>
+
+        <h2>Résultats pour votre recherche : {{ search }}</h2>
+        <a href="{{ path('app_index') }}" class="btn btn-outline-info">Remettre les filtres à zéro</a>
     {% endif %}
 
     <div class="container col-8 text-center reason-selector">
@@ -37,15 +38,16 @@
         </label>
     </div>
     <div class="container">
+        {% if not datas is empty  %}
         <table class="data-table table table-hover">
             <th class="col-3 text-center">Raison</th>
             <th class="col-3 text-center">Heure de fermeture du pont</th>
             <th class="col-3 text-center">Heure de réouverture du pont</th>
 
-            {% for data in datas %}
+            {% for data in datas|sort((a,b)=> a.closureHourObject <=> b.closureHourObject) %}
 
                 {% if data.reason is same as("MAINTENANCE") %}
-                    <tr class="maintenanceReason hidden">
+                    <tr class="maintenanceReason">
                         <td class="text-center">{{ data.reason }}</td>
                         <td class="text-center">{{ data.closureHour }}</td>
                         <td class="text-center">{{ data.reOpenHour }}</td>
@@ -53,7 +55,7 @@
 
                 {% endif %}
                 {% if not data.reason is same as("MAINTENANCE") %}
-                    <tr class="boatReason shown">
+                    <tr class="boatReason">
                         <td class="text-center">{{ data.reason }}</td>
                         <td class="text-center">{{ data.closureHour }}</td>
                         <td class="text-center">{{ data.reOpenHour }}</td>
@@ -63,6 +65,11 @@
 
             {% endfor %}
         </table>
+        {% else %}
+            <div class="container col-6">
+        <h3 class="text-center">Aucune fermeture du pont ne correspond à votre recherche</h3>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 

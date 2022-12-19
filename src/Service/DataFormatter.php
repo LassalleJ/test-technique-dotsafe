@@ -28,7 +28,7 @@ class DataFormatter
                     'closureHour' => $passageDateClosureString,
                     'reOpenHour' => $passageDateOpeningString,
                     'reason' => $reason,
-                    'reOpenHourObject'=>$passageDateOpening
+                    'closureHourObject'=>$passageDateClosure
                 ];
                 $arrayOfEvent[] = $closureEvent;
             }

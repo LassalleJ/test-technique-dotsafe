@@ -18,7 +18,7 @@ class HomeController extends AbstractController
     public function index(DataFetcher $dataFetcher, DataFormatter $dataFormatter, Request $request): Response
     {
         $searchedData = [];
-        $fixedDate = new Datetime ('09/11/2022');
+        $fixedDate = new Datetime ('06/11/2022');
 //        DataFetcher service sends an array of bridge's closures data
 
         $records = $dataFetcher->fetchData();
@@ -43,7 +43,7 @@ class HomeController extends AbstractController
             $shownData = [];
             $search = $searchDateForm->getData()['Date']->format('d-m-Y');
             foreach ($formattedData as $data) {
-                if ($search === $data['reOpenHourObject']->format('d-m-Y')) {
+                if ($search === $data['closureHourObject']->format('d-m-Y')) {
                     $shownData[] = $data;
                 }
             }
