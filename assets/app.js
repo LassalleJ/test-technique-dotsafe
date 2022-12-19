@@ -12,36 +12,50 @@ import './styles/app.scss';
 import './bootstrap';
 
 let toggle = document.getElementById('toggle-listener')
+let showBoatTab = document.getElementById('show-boat-tab')
+let showMaintenanceTab = document.getElementById('show-maintenance-tab')
 let maintenanceTableLine = document.getElementsByClassName('maintenanceReason')
 let boatTableLine = document.getElementsByClassName('boatReason')
 let searchBoatForm = document.getElementById('searchBoatForm')
-toggle.addEventListener("click", function () {
-    if (searchBoatForm.classList.contains("shown")) {
-        searchBoatForm.classList.remove("shown");
-        searchBoatForm.classList.add("hidden");
-    } else {
-        searchBoatForm.classList.remove("hidden");
-        searchBoatForm.classList.add("shown");
-    }
-    for (let i = 0; i < maintenanceTableLine.length; i++) {
-        if (maintenanceTableLine[i].classList.contains("hidden")) {
-            maintenanceTableLine[i].classList.remove("hidden")
-            maintenanceTableLine[i].classList.add("shown")
 
-        } else {
+showBoatTab.addEventListener("click", function () {
+    searchBoatForm.classList.add("shown")
+    searchBoatForm.classList.remove("hidden")
+    showBoatTab.classList.toggle('active-tab')
+    showMaintenanceTab.classList.remove('active-tab')
+
+    for (let i = 0; i < maintenanceTableLine.length; i++) {
+        if (maintenanceTableLine[i].classList.contains('shown')) {
             maintenanceTableLine[i].classList.remove("shown")
             maintenanceTableLine[i].classList.add("hidden")
+        } else {
+            maintenanceTableLine[i].classList.add("shown")
+            maintenanceTableLine[i].classList.remove("hidden")
         }
+    }
+    for (let i = 0; i < boatTableLine.length; i++) {
+        boatTableLine[i].classList.remove("hidden")
+        boatTableLine[i].classList.add("shown")
+    }
+})
+showMaintenanceTab.addEventListener("click", function () {
+    searchBoatForm.classList.toggle("shown")
+    searchBoatForm.classList.toggle("hidden")
+    showMaintenanceTab.classList.toggle('active-tab')
+    showBoatTab.classList.remove('active-tab')
+    for (let i = 0; i < maintenanceTableLine.length; i++) {
+            maintenanceTableLine[i].classList.remove("hidden")
+            maintenanceTableLine[i].classList.add("shown")
     }
     for (let i = 0; i < boatTableLine.length; i++) {
         if (boatTableLine[i].classList.contains("shown")) {
             boatTableLine[i].classList.remove("shown")
             boatTableLine[i].classList.add("hidden")
-
         } else {
             boatTableLine[i].classList.remove("hidden")
-            boatTableLine[i].classList.add('shown')
+            boatTableLine[i].classList.add("shown")
         }
+
     }
 })
 
