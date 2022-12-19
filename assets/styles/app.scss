@@ -1,6 +1,6 @@
-.table {
-    border:1px solid black;
-}
+//.table {
+//    border:1px solid black;
+//}
 .toggle-switch {
     display: inline-block;
     background: #ccc;
@@ -53,4 +53,25 @@
 .reason-selector {
     border:none;
     padding:24px;
+}
+.searchFormContainer {
+    text-align: center;
+    margin-left:25%;
+}
+.d-flex {
+    gap:60px;
+}
+label {
+    display:block;
+}
+form {
+    text-align:center;
+    padding:20px;
+}
+.task_field {
+    text-align: center;
+}
+.dateFormInput {
+    margin-top:24px;
+    margin-bottom:24px;
 }

@@ -22,12 +22,13 @@ class DataFormatter
                     $passageDateOpening=$passageDateOpening->modify('+1 day');
                 }
 
-                $passageDateClosure = $passageDateClosure->format("d-m-Y à H:i:s");
-                $passageDateOpening = $passageDateOpening->format("d-m-Y à H:i:s");
+                $passageDateClosureString = $passageDateClosure->format("d-m-Y à H:i:s");
+                $passageDateOpeningString = $passageDateOpening->format("d-m-Y à H:i:s");
                 $closureEvent = [
-                    'closureHour' => $passageDateClosure,
-                    'reOpenHour' => $passageDateOpening,
+                    'closureHour' => $passageDateClosureString,
+                    'reOpenHour' => $passageDateOpeningString,
                     'reason' => $reason,
+                    'closureHourObject'=>$passageDateClosure
                 ];
                 $arrayOfEvent[] = $closureEvent;
             }
