@@ -50,6 +50,11 @@ class DataFormatter
                 $arrayOfEvent[] = $closureEvent;
             }
         }
+
+        // Sort the array of event
+
+        $key_values = array_column($arrayOfEvent, 'closureHourObject');
+        array_multisort($key_values, SORT_ASC, $arrayOfEvent);
         return $arrayOfEvent;
     }
 }

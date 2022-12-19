@@ -19,7 +19,7 @@ class HomeController extends AbstractController
     {
         // Set up a fake 'current day' date
 
-        $fixedDate = new Datetime ('06/11/2022');
+        $fixedDate = new Datetime ('06/10/2022');
 
 //        DataFetcher service sends an array of bridge's closures data
 
@@ -29,6 +29,10 @@ class HomeController extends AbstractController
 
         $formattedData = $dataFormatter->formatDataFromApi($records, $fixedDate);
         $shownData = $formattedData;
+
+        // Get the time before the next closure for the timer feature
+
+        $timeBeforeNextClosure=$fixedDate->diff($formattedData[0]['closureHourObject']);
 
         // Generate the two forms & handle their respective requests
 
@@ -47,7 +51,7 @@ class HomeController extends AbstractController
 
             // Get the form input and convert it to a string
 
-            $search = $searchDateForm->getData()['Date']->format('d-m-Y');
+            $search = $searchDateForm->getData()['Rechercher_une_date']->format('d-m-Y');
 
             // Look for the searched date inside the array of events
 
@@ -66,7 +70,7 @@ class HomeController extends AbstractController
 
             // Get the form input
 
-            $search = $searchBoatForm->getData()['Bateau'];
+            $search = $searchBoatForm->getData()['Rechercher_un_bateau'];
 
             foreach ($formattedData as $data) {
 
@@ -86,7 +90,8 @@ class HomeController extends AbstractController
             'datas' => $shownData,
             'dateForm' => $searchDateForm,
             'boatForm' => $searchBoatForm,
-            'search' => $search
+            'search' => $search,
+            'timerNextEvent'=>$timeBeforeNextClosure->format("%a jour(s), %H heure(s), %I minute(s), %S seconde(s))"),
         ]);
     }
 }
