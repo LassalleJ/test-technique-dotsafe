@@ -17,20 +17,20 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(DataFetcher $dataFetcher, DataFormatter $dataFormatter, Request $request): Response
     {
-        $searchedData = [];
+        // Set up a fake 'current day' date
+
         $fixedDate = new Datetime ('06/11/2022');
+
 //        DataFetcher service sends an array of bridge's closures data
 
         $records = $dataFetcher->fetchData();
 
-//        Format the data
+//        Format the data with the service
 
         $formattedData = $dataFormatter->formatDataFromApi($records, $fixedDate);
         $shownData = $formattedData;
 
-//        Return the twig view with the data
-
-        $fixedDateString = $fixedDate->format('d-m-Y');
+        // Generate the two forms & handle their respective requests
 
         $searchBoatForm = $this->createForm(SearchBoatType::class);
         $searchDateForm = $this->createForm(SearchDateType::class);
@@ -39,9 +39,18 @@ class HomeController extends AbstractController
         $searchDateForm->handleRequest($request);
         $search = '';
 
-        if ($searchDateForm->isSubmitted()) {
+        // Handle the form that allows to search for closures at a specific date
+
+        if ($searchDateForm->isSubmitted() && $searchBoatForm->isValid()) {
+
             $shownData = [];
+
+            // Get the form input and convert it to a string
+
             $search = $searchDateForm->getData()['Date']->format('d-m-Y');
+
+            // Look for the searched date inside the array of events
+
             foreach ($formattedData as $data) {
                 if ($search === $data['closureHourObject']->format('d-m-Y')) {
                     $shownData[] = $data;
@@ -49,12 +58,25 @@ class HomeController extends AbstractController
             }
         }
 
+        // Handle the form that allows to search for a passage of a specific boat
+
         if ($searchBoatForm->isSubmitted() && $searchBoatForm->isValid()) {
+
             $shownData = [];
+
+            // Get the form input
+
             $search = $searchBoatForm->getData()['Bateau'];
+
             foreach ($formattedData as $data) {
-                $searchLowercase=strtolower($search);
-                $boatNameLowercase=strtolower($data['reason']);
+
+                // Convert input and data strings into lowercase
+
+                $searchLowercase = strtolower($search);
+                $boatNameLowercase = strtolower($data['reason']);
+
+                // Look for the search string inside the boats array
+
                 if (str_contains($boatNameLowercase, $searchLowercase)) {
                     $shownData[] = $data;
                 }
@@ -63,7 +85,6 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'datas' => $shownData,
-            'dateOfToday' => $fixedDateString,
             'dateForm' => $searchDateForm,
             'boatForm' => $searchBoatForm,
             'search' => $search

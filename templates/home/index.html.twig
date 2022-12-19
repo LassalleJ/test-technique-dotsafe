@@ -3,7 +3,7 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <h1 class="title text-center">Futures fermetures du pont à partir du {{ dateOfToday }}</h1>
+    <h1 class="title text-center">Fermetures du pont Chaban-Delmas</h1>
     <div class="container d-flex justify-content-center p-2 col6">
         <div class="searchDateForm form-group">
             {{ form_start(dateForm) }}
@@ -23,51 +23,50 @@
     </div>
 
     {% if not search is empty %}
-
-        <h2>Résultats pour votre recherche : {{ search }}</h2>
-        <a href="{{ path('app_index') }}" class="btn btn-outline-info">Remettre les filtres à zéro</a>
+        <div class="container text-center">
+            <h3 class="search-results">Résultats pour votre recherche : {{ search }}</h3>
+            <a href="{{ path('app_index') }}" class="btn btn-outline-info reset-filter-btn">Réinitialiser les filtres</a>
+        </div>
     {% endif %}
-
-    <div class="container col-8 text-center reason-selector">
-        <label class="toggle">
-            <span class="toggle-label">Afficher uniquement les fermetures dûes à une maintenance</span>
-            <input class="toggle-checkbox" id="toggle-listener" type="checkbox" checked>
-            <div class="toggle-switch"></div>
-            <span class="toggle-label">Afficher uniquement les fermetures dûes à un passage de bateau(x)</span>
-
-        </label>
-    </div>
     <div class="container">
-        {% if not datas is empty  %}
-        <table class="data-table table table-hover">
-            <th class="col-3 text-center">Raison</th>
-            <th class="col-3 text-center">Heure de fermeture du pont</th>
-            <th class="col-3 text-center">Heure de réouverture du pont</th>
+        {% if not datas is empty %}
+            <div class=" container tab-container">
+                <div class="p-2 text-center flex-fill tab" id="show-maintenance-tab">
+                    <h5>Afficher uniquement les maintenances du pont</h5>
+                </div>
+                <div class="p-2 text-center flex-fill tab" id="show-boat-tab">
+                   <h5>Afficher uniquement les passages de bateaux</h5>
+                </div>
+            </div>
+            <table class="data-table table table-hover">
+                <th class="col-3 text-center">Raison</th>
+                <th class="col-3 text-center">Heure de fermeture du pont</th>
+                <th class="col-3 text-center">Heure de réouverture du pont</th>
 
-            {% for data in datas|sort((a,b)=> a.closureHourObject <=> b.closureHourObject) %}
+                {% for data in datas|sort((a,b)=> a.closureHourObject <=> b.closureHourObject) %}
 
-                {% if data.reason is same as("MAINTENANCE") %}
-                    <tr class="maintenanceReason">
-                        <td class="text-center">{{ data.reason }}</td>
-                        <td class="text-center">{{ data.closureHour }}</td>
-                        <td class="text-center">{{ data.reOpenHour }}</td>
-                    </tr>
+                    {% if data.reason is same as("MAINTENANCE") %}
+                        <tr class="maintenanceReason shown">
+                            <td class="text-center">{{ data.reason }}</td>
+                            <td class="text-center">{{ data.closureHour }}</td>
+                            <td class="text-center">{{ data.reOpenHour }}</td>
+                        </tr>
 
-                {% endif %}
-                {% if not data.reason is same as("MAINTENANCE") %}
-                    <tr class="boatReason">
-                        <td class="text-center">{{ data.reason }}</td>
-                        <td class="text-center">{{ data.closureHour }}</td>
-                        <td class="text-center">{{ data.reOpenHour }}</td>
-                    </tr>
-                {% endif %}
+                    {% endif %}
+                    {% if not data.reason is same as("MAINTENANCE") %}
+                        <tr class="boatReason shown">
+                            <td class="text-center">{{ data.reason }}</td>
+                            <td class="text-center">{{ data.closureHour }}</td>
+                            <td class="text-center">{{ data.reOpenHour }}</td>
+                        </tr>
+                    {% endif %}
 
 
-            {% endfor %}
-        </table>
+                {% endfor %}
+            </table>
         {% else %}
             <div class="container col-6">
-        <h3 class="text-center">Aucune fermeture du pont ne correspond à votre recherche</h3>
+                <h3 class="text-center">Aucune fermeture du pont ne correspond à votre recherche</h3>
             </div>
         {% endif %}
     </div>
